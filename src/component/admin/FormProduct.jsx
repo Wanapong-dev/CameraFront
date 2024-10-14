@@ -16,19 +16,24 @@ export default function FormProduct() {
   const token = useCameraStore((state) => state.token);
   const getCategory = useCameraStore((state) => state.getCategory);
   const categories = useCameraStore((state) => state.categories);
+  const getProduct = useCameraStore((state) => state.getProduct);
+  const products = useCameraStore((state) => state.products);
+  console.log(products)
+
   const [form, setForm] = useState(initialState);
 
   useEffect(() => {
-    getCategory(token);
-  }, [token, getCategory]);
+    getCategory(token)
+    getProduct(token,50)
+
+  }, []);
 
   const hdlOnChange = (e) => {
-    const { name, value } = e.target;
     setForm({
       ...form,
-      [name]: name === "categoryId" ? parseInt(value) : value,     // แปลง categoryId เป็น number
-    });
-  };
+      [e.target.name]: e.target.value
+  })
+}
 
   const hdlSubmit = async (e) => {
     e.preventDefault();
@@ -87,6 +92,54 @@ export default function FormProduct() {
         <button className="btn btn-sm bg-yellow-400 text-black hover:bg-yellow-500 mt-4">
           เพิ่มสินค้า
         </button>
+
+<hr />
+<br />
+<table className="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">ชื่อสินค้า</th>
+                            <th scope="col">ประเภท</th>
+                            <th scope="col">รายละเอียด</th>
+                            <th scope="col">ราคา</th>
+                            <th scope="col">จำนวน</th>
+                            <th scope="col">จำนวนที่ขายได้</th>
+                            <th scope="col">วันที่อัปเดต</th>
+                            <th scope="col">จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {
+                            products.map((item, index) => {
+                                console.log(item.category?.name) 
+                                return (
+                                    <tr key={index}>
+                                        <th scope="row">{index + 1}</th>
+                                        <td>{item.title}</td>
+                                        <td>{item.category?.name}</td>
+                                        <td>{item.description}</td>
+                                        <td>{item.price}</td>
+                                        <td>{item.quantity}</td>
+                                        <td>{item.sold}</td>
+                                        <td>{item.updatedAt}</td>
+                                        <td>
+                                            <p>แก้ไข</p>
+                                            <p>ลบ</p>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+
+
+
+                    </tbody>
+                </table>
+
+
+
       </form>
     </div>
   );
