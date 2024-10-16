@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import useCameraStore from "../../store/camera-store";
-import { createProduct } from "../../api/product-api";
+import { createProduct, deleteProduct } from "../../api/product-api";
 import { toast } from "react-toastify";
+import Uploadfile from "./Uploadfile";
+import { Link } from "react-router-dom";
 
 const initialState = {
   title: "",
   description: "",
-  price: "",
-  quantity: "",
+  price: 0,
+  quantity: 0,
   categoryId: "",
   images: [],
 };
@@ -18,13 +20,20 @@ export default function FormProduct() {
   const categories = useCameraStore((state) => state.categories);
   const getProduct = useCameraStore((state) => state.getProduct);
   const products = useCameraStore((state) => state.products);
-  console.log(products)
 
-  const [form, setForm] = useState(initialState);
+
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    price: 0,
+    quantity: 0,
+    categoryId: "",
+    images: [],
+  });
 
   useEffect(() => {
     getCategory(token)
-    getProduct(token,50)
+    getProduct(token,100)
 
   }, []);
 
@@ -39,11 +48,28 @@ export default function FormProduct() {
     e.preventDefault();
     try {
         const res = await createProduct(token, form);
+        setForm(initialState)
+        getProduct(token)
         toast.success(`เพิ่มข้อมูล ${res.data.title} สำเร็จ`)
     } catch (err) {
         console.log(err);
     }
   };
+
+  const hdlDelete = async (id) => {
+    if(window.confirm("Confirm Delete")){
+      try {
+
+        const res = await deleteProduct(token,id)
+        console.log(res)
+        toast.success('Deleted Product Success')
+        getProduct(token)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
+
 
   return (
     <div className="container mx-auto p-6 bg-black shadow-lg rounded-lg">
@@ -89,16 +115,26 @@ export default function FormProduct() {
             </option>
           ))}
         </select>
+
+
+          {/* uploadfile */}
+          <Uploadfile form={form} setForm={setForm}/>
+
         <button className="btn btn-sm bg-yellow-400 text-black hover:bg-yellow-500 mt-4">
           เพิ่มสินค้า
         </button>
 
+
+
+
+{/* ตารางสินค้า */}
 <hr />
 <br />
 <table className="table">
                     <thead>
                         <tr>
                             <th scope="col">No.</th>
+                            <th scope="col">รูปภาพ</th>
                             <th scope="col">ชื่อสินค้า</th>
                             <th scope="col">ประเภท</th>
                             <th scope="col">รายละเอียด</th>
@@ -113,10 +149,21 @@ export default function FormProduct() {
 
                         {
                             products.map((item, index) => {
-                                console.log(item.category?.name) 
+                                // console.log(item.category?.name) 
                                 return (
                                     <tr key={index}>
                                         <th scope="row">{index + 1}</th>
+                                        <td>
+                                            {
+                                              item.images.length > 0
+                                              ? <img className="w-24 h-24 rounded-lg shadow-md hover:scale-105"
+                                              src={item.images[0].url} />
+                                              : <div
+                                                className="w-24 h-24 bg-slate-900 rounded-md flex items-center justify-center"
+                                              > No image</div>
+                                            }
+
+                                        </td>
                                         <td>{item.title}</td>
                                         <td>{item.category?.name}</td>
                                         <td>{item.description}</td>
@@ -125,21 +172,20 @@ export default function FormProduct() {
                                         <td>{item.sold}</td>
                                         <td>{item.updatedAt}</td>
                                         <td>
-                                            <p>แก้ไข</p>
-                                            <p>ลบ</p>
+                                            <Link
+                                            className="btn btn-sm bg-yellow-400 text-black hover:bg-yellow-500 hover:-translate-y-1  mt-4 w-4/5"
+                                            to={'/admin/product/'+item.id}>แก้ไข</Link>
+                                            <p 
+                                            onClick={()=>hdlDelete(item.id)}
+                                            className="btn btn-sm bg-red-500 text-black hover:bg-red-600 hover:-translate-y-1 mt-4 w-4/5"
+                                            >ลบ</p>
                                         </td>
                                     </tr>
                                 )
                             })
                         }
-
-
-
                     </tbody>
                 </table>
-
-
-
       </form>
     </div>
   );

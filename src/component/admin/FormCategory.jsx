@@ -21,7 +21,7 @@ export default function FormCategory() {
     }
     try {
       const res = await createCategory(token, { name });
-      console.log(res.data.name);
+      // console.log(res.data.name);
       toast.success(`Add Category ${res.data.name} Success!!`);
       getCategory(token)
     } catch (err) {
