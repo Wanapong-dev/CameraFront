@@ -89,7 +89,7 @@ export default function Uploadfile(props) {
         {/* image */}
           {form.images.map((item, index) => (
             <div key={index} className="relative  p-1">
-              <img src={item.url} className="w-24 h-24 rounded-md shadow-lg hover:scale-105" />
+              <img src={item.url} className="w-36 h-36 rounded-md shadow-lg hover:scale-105" />
               <span className="absolute top-0 right-0 p-1 text-yellow-500 cursor-pointer hover:text-red-500"
               onClick={()=>hdlDelete(item.public_id)}
               >

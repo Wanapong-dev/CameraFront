@@ -32,8 +32,8 @@ export default function FormProduct() {
   });
 
   useEffect(() => {
-    getCategory(token)
-    getProduct(token,100)
+    getCategory()
+    getProduct(100)
 
   }, []);
 
@@ -49,7 +49,7 @@ export default function FormProduct() {
     try {
         const res = await createProduct(token, form);
         setForm(initialState)
-        getProduct(token)
+        getProduct()
         toast.success(`เพิ่มข้อมูล ${res.data.title} สำเร็จ`)
     } catch (err) {
         console.log(err);
@@ -63,7 +63,7 @@ export default function FormProduct() {
         const res = await deleteProduct(token,id)
         console.log(res)
         toast.success('Deleted Product Success')
-        getProduct(token)
+        getProduct()
       } catch (err) {
         console.log(err)
       }
@@ -77,57 +77,79 @@ export default function FormProduct() {
         <h1 className="text-2xl font-bold mb-6 text-yellow-400">
           เพิ่มข้อมูลสินค้า
         </h1>
-        <input
-          className="input input-bordered w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-800 text-white placeholder-gray-400"
-          value={form.title}
-          onChange={hdlOnChange}
-          placeholder="Title"
-          name="title"
-        />
-        <input
-          className="input input-bordered w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-800 text-white placeholder-gray-400"
-          value={form.description}
-          onChange={hdlOnChange}
-          placeholder="Description"
-          name="description"
-        />
-        <input
-          type="number"
-          className="input input-bordered w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-800 text-white placeholder-gray-400"
-          value={form.price}
-          onChange={hdlOnChange}
-          placeholder="Price"
-          name="price"
-        />
-        <input
-          type="number"
-          className="input input-bordered w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-800 text-white placeholder-gray-400"
-          value={form.quantity}
-          onChange={hdlOnChange}
-          placeholder="Quantity"
-          name="quantity"
-        />
-        <select className="border" name="categoryId" onChange={hdlOnChange} required>
-          <option value="">Please Select</option>
-          {categories.map((item, index) => (
-            <option key={index} value={item.id}>
-              {item.name}
-            </option>
-          ))}
-        </select>
+
+        <div className="flex flex-wrap justify-between">
+
+  <div className="w-full md:w-1/2 space-y-4">
+    <input
+      className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-800 text-white placeholder-gray-400"
+      value={form.title}
+      onChange={hdlOnChange}
+      placeholder="Title"
+      name="title"
+    />
+    <input
+      className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-800 text-white placeholder-gray-400"
+      value={form.description}
+      onChange={hdlOnChange}
+      placeholder="Description"
+      name="description"
+    />
+    <input
+      type="number"
+      className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-800 text-white placeholder-gray-400"
+      value={form.price}
+      onChange={hdlOnChange}
+      placeholder="Price"
+      name="price"
+    />
+    <input
+      type="number"
+      className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-800 text-white placeholder-gray-400"
+      value={form.quantity}
+      onChange={hdlOnChange}
+      placeholder="Quantity"
+      name="quantity"
+    />
+    <select 
+      className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-800 text-white"
+      name="categoryId" 
+      onChange={hdlOnChange} 
+      required
+    >
+      <option value="">Please Select</option>
+      {categories.map((item, index) => (
+        <option key={index} value={item.id}>
+          {item.name}
+        </option>
+      ))}
+    </select>
+  </div>
 
 
-          {/* uploadfile */}
-          <Uploadfile form={form} setForm={setForm}/>
+  <div className="w-full md:w-1/2 flex flex-col justify-center items-center space-y-4">
 
-        <button className="btn btn-sm bg-yellow-400 text-black hover:bg-yellow-500 mt-4">
-          เพิ่มสินค้า
-        </button>
+    <div className="w-full flex justify-center">
+      <div className="flex justify-center items-center">
+        <Uploadfile form={form} setForm={setForm} />
+      </div>
+    </div>
+
+    {/* ปุ่มเพิ่มสินค้า */}
+    <button className="btn btn-sm bg-yellow-400 text-black hover:bg-yellow-500">
+      เพิ่มสินค้า
+    </button>
+  </div>
+</div>
+
+
 
 
 
 
 {/* ตารางสินค้า */}
+<br />
+<br />
 <hr />
 <br />
 <table className="table">

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from 'react-toastify';
 
@@ -10,6 +10,8 @@ const [form,setForm] = useState({
   password:"",
   confirmPassword:""
 })
+
+const navigate = useNavigate();
 
 const hdlOnChange = (e) => {
 setForm({
@@ -27,6 +29,7 @@ const hdlSubmit = async (e) => {
   try {
     const res = await axios.post('http://localhost:8000/api/register',form)
     toast.success(res.data)
+    navigate('/login')
   } catch (err) {
     const errMsg = err.response?.data?.message 
     toast.error(errMsg)

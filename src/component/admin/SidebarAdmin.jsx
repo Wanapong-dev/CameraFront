@@ -66,20 +66,6 @@ export default function SidebarAdmin() {
           </nav>
     
     
-          <div >
-            <NavLink
-              className={({ isActive }) =>
-                isActive
-                  ? 'bg-black rounded-md text-white px-4 py-2 flex items-center'
-                  : 'text-gray-300 px-4 py-2 hover:bg-gray-700 hover:text-white rounded flex items-center'
-              }
-            >
-              <LayoutDashboard className='mr-2' />
-              Logout
-            </NavLink>
-          </div>
-    
-    
         </div>
       )
     }

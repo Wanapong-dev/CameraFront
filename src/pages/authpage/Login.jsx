@@ -43,9 +43,9 @@ const hdlSubmit = async (e) => {
 
 const roleRedirect = (role) => {
   if(role ==='admin') {
-    navigate('/admin')
+    navigate('/')
   } else {
-    navigate('/user')
+    navigate('/')
   }
 }
 
