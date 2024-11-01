@@ -18,8 +18,9 @@ export default function Categories() {
 
 
   const hdlCheck = (id) => {
-    actionSearchFilter({ category : [id] })
+    actionSearchFilter({ category: [id] });
   };
+  
 
 
   return (

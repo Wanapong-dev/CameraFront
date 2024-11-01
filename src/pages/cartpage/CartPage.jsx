@@ -1,19 +1,31 @@
 import React from "react";
 import { Trash2 } from 'lucide-react';
-import useCameraStore from "../store/camera-store";
 import { useNavigate } from 'react-router-dom';
+import { userCart } from '../../api/cart-api'
+import { toast } from "react-toastify";
+import useCameraStore from "../../store/camera-store";
 
 export default function CartPage() {
-  const carts = useCameraStore((state) => state.carts);
+  const cart = useCameraStore((state) => state.carts);
+  const token = useCameraStore((state) => state.token)
   const actionUpdateQuantity = useCameraStore((state) => state.actionUpdateQuantity);
   const actionRemoveProduct = useCameraStore((state) => state.actionRemoveProduct);
   const getTotalPrice = useCameraStore((state) => state.getTotalPrice);
   const user = useCameraStore((state)=>state.user);
   const navigate = useNavigate();  
 
-  const hdlGoCart = () =>{
-    navigate('/')
+  console.log({cart})
+
+  const hdlSaveCart = async () => {
+    await userCart(token,{cart})
+    .then((res)=>{
+      console.log(res)
+      toast.success('Add Cart Success')
+      navigate('/checkout')
+    })
+    .catch((err)=>console.log(err))
   }
+
 
   const hdlLogin = () =>{
     navigate('/login')
@@ -37,7 +49,7 @@ export default function CartPage() {
             </thead>
 
             <tbody>
-              {carts.map((item, index) => (
+              {cart.map((item, index) => (
                 <tr key={index}>
                   <td className="p-4">
                     <img
@@ -91,18 +103,20 @@ export default function CartPage() {
         
         {
           user 
-          ? <button className="bg-black text-white w-full py-2 rounded hover:bg-gray-800">
+          ? <button 
+          onClick={hdlSaveCart}
+          className="bg-black text-white w-full py-2 rounded hover:bg-gray-800">
             สั่งซื้อสินค้า
           </button>
 
           : <button 
-              onClick={hdlLogin} // เพิ่มฟังก์ชันเพื่อเปลี่ยนไปยังหน้าล็อกอิน
+              onClick={hdlLogin} 
               className="bg-yellow-400 text-black w-full py-2 rounded hover:bg-yellow-700">
               กรุณา Login
             </button>
         }
           <button 
-          onClick={hdlGoCart}
+          onClick={()=>navigate('/')}
           className="mt-4 w-full py-2 rounded border hover:bg-yellow-400">
             เลือกซื้อสินค้าต่อ
           </button>

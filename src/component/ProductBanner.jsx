@@ -48,13 +48,13 @@ export default function ProductBanner() {
 
 
           {/* View Button */}
-          <button className="btn btn-info w-2/5">
+          {/* <button className="btn btn-info w-2/5">
             View
-          </button>
+          </button> */}
         </div>
   
        
-      </div>
+      </div> 
     );
   };
   

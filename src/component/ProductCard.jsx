@@ -1,6 +1,6 @@
 import React from "react";
 import { ShoppingCart } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';  // ใช้ useNavigate จาก React Router
+import { useNavigate } from 'react-router-dom';  
 import useCameraStore from "../store/camera-store";
 
 export default function ProductCard(props) {

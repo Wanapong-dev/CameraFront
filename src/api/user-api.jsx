@@ -9,7 +9,7 @@ export const  listUsers = async(token) => {
 }
 
 export const updateMember = (token, id, form) => {
-    return axios.post("http://localhost:8000/api/change-role", { id, ...form }, {
+    return axios.post("http://localhost:8000/api/change-role", { id, ...form }, { //ไอดีไม่ได้อยู่ในฟอร์ม เอามากระจายเป็น obj
       headers: {
         Authorization: `Bearer ${token}`, 
       },
@@ -23,3 +23,16 @@ export const updateMember = (token, id, form) => {
         },
       });
   };
+
+  export const saveAddress = (token, data) => {
+    return axios.post(
+      "http://localhost:8000/api/user/address",
+      data ,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  };
+

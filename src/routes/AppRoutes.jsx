@@ -2,9 +2,9 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import SellPage from "../pages/SellPage";
-import CartPage from "../pages/CartPage";
+import CartPage from "../pages/cartpage/CartPage";
 import History from "../pages/History";
-import Checkout from "../pages/Checkout";
+import Checkout from "../pages/cartpage/Checkout";
 import Login from "../pages/authpage/Login";
 import Register from "../pages/authpage/Register";
 import Layout from "../Layouts/Layout";
@@ -18,7 +18,8 @@ import HomeUser from "../pages/userpage/HomeUser"
 import ProtectRouteUser from "../routes/ProtectRouteUser";
 import ProtectRouteAdmin from "../routes/ProtectRouteAdmin";
 import EditProduct from "../pages/adminpage/EditProduct"
-
+import Payment from "../pages/cartpage/Payment";
+import OrderSuccess from "../pages/userpage/OrderSuccess";
 
 const router = createBrowserRouter([
   {
@@ -29,11 +30,20 @@ const router = createBrowserRouter([
       { path: "product/:id", element: <SellPage />},
       { path: "cart", element: <CartPage /> },
       { path: "history", element: <History /> },
-      { path: "checkout", element: <Checkout /> },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
+
     ],
   },
+  {
+    path: "/checkout",
+    element: <ProtectRouteUser element={<Layout/>}/>,
+    children: [
+      { index: true, element: <Checkout /> }, 
+      { path: "payment", element: <Payment /> }, 
+    ]
+  },
+
   {
     path: "/admin",
     element: <ProtectRouteAdmin element={<LayoutAdmin />} />,
@@ -50,7 +60,8 @@ const router = createBrowserRouter([
     element: <ProtectRouteUser element={<LayoutUser />} />,
     children: [
       { index: true, element: <HomeUser /> }, 
-    
+      { path: "order-success", element: <OrderSuccess /> },
+
     ],
   },
 ]);

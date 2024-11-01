@@ -73,7 +73,7 @@ const roleRedirect = (role) => {
             <input
               onChange={hdlOnChange}
               name="password"
-              type="text"
+              type="password"
               placeholder="••••••••"
               className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
             />

@@ -1,10 +1,10 @@
 import axios from "axios";
 
-// Add products to cart
+
 export const userCart = (token, cart) => {
   return axios.post(
     "http://localhost:8000/api/user/cart", 
-    { cart },
+     cart ,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -13,8 +13,8 @@ export const userCart = (token, cart) => {
   );
 };
 
-// Get user cart
-export const getUserCart = (token) => {
+
+export const listUserCart = (token) => {
   return axios.get("http://localhost:8000/api/user/cart", {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -22,20 +22,11 @@ export const getUserCart = (token) => {
   });
 };
 
-// Empty cart
-export const emptyCart = (token) => {
-  return axios.delete("http://localhost:8000/api/user/cart", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
 
-// Save address
 export const saveAddress = (token, address) => {
   return axios.post(
     "http://localhost:8000/api/user/address",
-    { address },
+    {address} ,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -44,24 +35,14 @@ export const saveAddress = (token, address) => {
   );
 };
 
-// Save order
-export const saveOrder = (token) => {
+export const saveOrder = (token, payload) => {
   return axios.post(
     "http://localhost:8000/api/user/order",
-    {},
+    payload ,
     {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     }
   );
-};
-
-// Get user orders
-export const getOrder = (token) => {
-  return axios.get("http://localhost:8000/api/user/order", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
 };

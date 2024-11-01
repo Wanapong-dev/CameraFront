@@ -1,6 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { LayoutDashboard } from 'lucide-react';
+import { ChartNoAxesGantt } from 'lucide-react';
+import { Camera } from 'lucide-react';
+import { Scroll } from 'lucide-react';
 
 export default function SidebarAdmin() {
     return (
@@ -33,7 +36,7 @@ export default function SidebarAdmin() {
                   : 'text-gray-300 px-4 py-2 hover:bg-yellow-700 hover:text-white rounded flex items-center'
               }
             >
-              <LayoutDashboard className='mr-2' />
+              <ChartNoAxesGantt className='mr-2' />
               Manage
             </NavLink>
     
@@ -46,7 +49,7 @@ export default function SidebarAdmin() {
                   : 'text-gray-300 px-4 py-2 hover:bg-yellow-700 hover:text-white rounded flex items-center'
               }
             >
-              <LayoutDashboard className='mr-2' />
+              <Scroll className='mr-2' />
               Category
             </NavLink>
     
@@ -59,7 +62,7 @@ export default function SidebarAdmin() {
                   : 'text-gray-300 px-4 py-2 hover:bg-yellow-700 hover:text-white rounded flex items-center'
               }
             >
-              <LayoutDashboard className='mr-2' />
+              <Camera className='mr-2' />
               Product
             </NavLink>
     

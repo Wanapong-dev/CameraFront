@@ -12,7 +12,7 @@ export default function HomePage() {
   const products = useCameraStore((state)=>state.products)
 
   useEffect(()=>{
-    getProduct(12)
+    getProduct(20)
   },[])
 
 
